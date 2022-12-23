@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import Loading from "./views/Loading";
+import Pokemons from "./views/Pokemons";
+//jatka täältä, object, results [{}]
+const url = "https://pokeapi.co/api/v2/pokemon?limit=100&offset=0";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [loading, setLoading] = useState(false);
+    const [pokemons, setPokemons] = useState([]);
+
+    const fetchPokemons = async () => {
+        setLoading(true);
+
+        try {
+            const response = await fetch(url);
+            const pokemons = await response.json();
+            setLoading(false);
+            setPokemons(pokemons);
+        } catch (error) {
+            setLoading(false);
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        fetchPokemons();
+    }, []);
+
+    if (loading) {
+        return (
+            <main>
+                <Loading />
+            </main>
+        );
+    }
+
+    return (
+        <main>
+            <Pokemons pokemons={pokemons} />
+        </main>
+    );
 }
 
 export default App;
