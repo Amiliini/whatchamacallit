@@ -1,20 +1,11 @@
 import React from "react";
-import Pokemon from "./Pokemon";
 
-const Pokemons = ({ pokemons }) => {
+export default function Pokemons({ pokemon }) {
     return (
-        <section>
-            <div className="title">
-                <h2>Pokemons</h2>
-                <div className="underline"></div>
-            </div>
-            <div>
-                {pokemons.map(pokemon => {
-                    return <Pokemon key={pokemon.id} />;
-                })}
-            </div>
-        </section>
+        <div>
+            {pokemon.map(p => (
+                <div key={p}>{p}</div>
+            ))}
+        </div>
     );
-};
-
-export default Pokemons;
+}

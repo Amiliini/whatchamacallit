@@ -1,43 +1,59 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import Loading from "./views/Loading";
 import Pokemons from "./views/Pokemons";
-//jatka täältä, object, results [{}]
-const url = "https://pokeapi.co/api/v2/pokemon?limit=100&offset=0";
+import Pagination from "./views/Pagination";
+import Loading from "./views/Loading";
+
+import axios from "axios";
 
 function App() {
-    const [loading, setLoading] = useState(false);
-    const [pokemons, setPokemons] = useState([]);
+    const [pokemon, setPokemon] = useState(["a", "B"]);
+    const [currentPage, setCurrentPage] = useState(
+        "https://pokeapi.co/api/v2/pokemon"
+    );
+    const [nextPage, setNextPage] = useState();
+    const [previousPage, setPreviousPage] = useState();
+    const [loading, setLoading] = useState(true);
 
-    const fetchPokemons = async () => {
-        setLoading(true);
-
-        try {
-            const response = await fetch(url);
-            const pokemons = await response.json();
-            setLoading(false);
-            setPokemons(pokemons);
-        } catch (error) {
-            setLoading(false);
-            console.log(error);
-        }
-    };
     useEffect(() => {
-        fetchPokemons();
-    }, []);
+        setLoading(true);
+        let cancel;
+        axios
+            .get(currentPage, {
+                cancelToken: new axios.CancelToken(c => (cancel = c)),
+            })
+            .then(res => {
+                setLoading(false);
+                setNextPage(res.data.next);
+                setPreviousPage(res.data.previous);
+                setPokemon(res.data.results.map(p => p.name));
+            });
+        return () => cancel();
+    }, [currentPage]);
 
-    if (loading) {
-        return (
-            <main>
-                <Loading />
-            </main>
-        );
+    function goToNextPage() {
+        setCurrentPage(nextPage);
     }
 
+    function goToPreviousPage() {
+        setCurrentPage(previousPage);
+    }
+
+    if (loading)
+        return (
+            <>
+                <Loading />
+            </>
+        );
+
     return (
-        <main>
-            <Pokemons pokemons={pokemons} />
-        </main>
+        <>
+            <Pokemons pokemon={pokemon} />;
+            <Pagination
+                goToNextPage={nextPage ? goToNextPage : null}
+                goToPreviousPage={previousPage ? goToPreviousPage : null}
+            />
+        </>
     );
 }
 

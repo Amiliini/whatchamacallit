@@ -1,11 +1,11 @@
 import React from "react";
 
-const Pokemon = ({ name }) => {
+export default function Pokemons({ pokemon }) {
     return (
         <div>
-            <h4>{name}</h4>
+            {Pokemons.map(p => (
+                <div key={p}>{p}</div>
+            ))}
         </div>
     );
-};
-
-export default Pokemon;
+}
