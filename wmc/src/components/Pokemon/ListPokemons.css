@@ -1,0 +1,11 @@
+.runko {
+    color: rgb(31, 138, 148);
+    padding: 40px;
+    font-family: Arial;
+
+    text-align: center;
+}
+
+.pokemon {
+    font-size: large;
+}

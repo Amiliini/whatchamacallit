@@ -4,6 +4,7 @@ import Pokemons from "./Pokemons";
 import Pagination from "./Pagination";
 import Loading from "./Loading";
 import axios from "axios";
+import styles from "./ListPokemons.css";
 
 function ListPokemons() {
     const [pokemon, setPokemon] = useState(["a", "B"]);
@@ -47,11 +48,13 @@ function ListPokemons() {
 
     return (
         <>
-            <Pokemons pokemon={pokemon} />;
-            <Pagination
-                goToNextPage={nextPage ? goToNextPage : null}
-                goToPreviousPage={previousPage ? goToPreviousPage : null}
-            />
+            <div className="runko">
+                <Pokemons pokemon={pokemon} />
+                <Pagination
+                    goToNextPage={nextPage ? goToNextPage : null}
+                    goToPreviousPage={previousPage ? goToPreviousPage : null}
+                />
+            </div>
         </>
     );
 }
