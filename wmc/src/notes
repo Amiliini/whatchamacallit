@@ -1,0 +1,40 @@
+//Spread operator...
+//Split into single items and COPY them
+//Javascript nuggets CodingAddict https://www.youtube.com/playlist?list=PLnHJACx3NwAfRUcuKaYhZ6T5NRIpzgNGJ
+
+const salaatti = "salaatti";
+const letters = [...salaatti];
+console.log(letters); //["s", "a", "l", "a", "a", "t", "t", "i"];
+
+const nam = ["kurkku", "tomaatti", "porkkana"];
+const yäk = ["hillosipuli", "lanttu"];
+
+const lemppari = "jäävuorisalaatti";
+
+const kasvikset = [nam, yäk, lemppari];
+console.log(kasvikset); //[["kurkku", "tomaatti", "porkkana"],["hillosipuli", "lanttu"],"jäävuorisalaatti"]
+
+const kasvikset = [...nam, lemppari, ...yäk];
+console.log(kasvikset); //["kurkku", "tomaatti", "porkkana"," jäävuorisalaatti","hillosipuli", "lanttu"]
+
+const newKasvikset = [...kasvikset];
+newKasvikset[0] = "selleri";
+console.log(kasvikset); //['kurkku'jne]
+console.log(newKasvikset); //['selleri', 'tomaati' jne]
+
+
+77ES2018- ES8 Objcts
+
+const person = {name: 'joan', job; 'developer'};
+const newPerson= {...person};
+console.log(person);    //{name: 'joan', job: 'developer'}
+console.log(newPerson); // {name: 'joan', job: 'developer'}
+
+const newPerson= {...person, city:'Kemi'};
+console.log(person);    //{name: 'joan', job: 'developer'}
+console.log(newPerson); // {name: 'joan', job: 'developer', city:'Kemi'}
+
+
+const newPerson= {...person, city:'Kemi', name: 'Kit'};
+console.log(person);    //{name: 'joan', job: 'developer'}
+console.log(newPerson); // {name: 'Kit', job: 'developer', city:'Kemi'}
